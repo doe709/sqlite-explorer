@@ -1,0 +1,12 @@
+.vscode-test/
+.vscode/
+src/
+node_modules/
+*.vsix
+.gitignore
+.github/
+tsconfig.json
+esbuild.js
+generate-icon.js
+create-test-db.js
+test-database/

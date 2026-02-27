@@ -1,0 +1,499 @@
+/* ============================================
+   🗄️ SQLite Explorer — phpMyAdmin Style
+   Adapted for VSCode themes
+   ============================================ */
+
+/* ─── BASE STYLES ─── */
+:root {
+    --bg-primary: var(--vscode-sideBar-background, #1e1e1e);
+    --bg-secondary: var(--vscode-editor-background, #252526);
+    --bg-header: var(--vscode-sideBarSectionHeader-background, #333);
+    --text-primary: var(--vscode-foreground, #ccc);
+    --text-secondary: var(--vscode-descriptionForeground, #999);
+    --border-color: var(--vscode-sideBar-border, #444);
+    --accent: var(--vscode-button-background, #0e639c);
+    --accent-hover: var(--vscode-button-hoverBackground, #1177bb);
+    --danger: #dc3545;
+    --success: #28a745;
+    --warning: #ffc107;
+    --row-hover: var(--vscode-list-hoverBackground, #2a2d2e);
+    --row-stripe: rgba(255, 255, 255, 0.03);
+    --input-bg: var(--vscode-input-background, #3c3c3c);
+    --input-border: var(--vscode-input-border, #555);
+    --input-fg: var(--vscode-input-foreground, #ccc);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--vscode-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+    font-size: var(--vscode-font-size, 13px);
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    overflow-x: hidden;
+    padding: 0;
+    margin: 0;
+    line-height: 1.4;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ─── HEADER ─── */
+.header-bar {
+    padding: 8px 12px;
+    background: var(--bg-header);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.header-bar h6 {
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.db-name {
+    font-size: 11px;
+    color: var(--text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ─── TOOLBAR ─── */
+.toolbar {
+    padding: 8px;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.toolbar .btn {
+    font-size: 12px;
+    padding: 4px 8px;
+}
+
+/* ─── TABLE LIST ─── */
+.table-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 4px 0;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-secondary);
+}
+
+.empty-state p {
+    font-size: 12px;
+}
+
+.table-item {
+    display: flex;
+    align-items: center;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: background 0.15s;
+    gap: 8px;
+}
+
+.table-item:hover {
+    background: var(--row-hover);
+}
+
+.table-item.active {
+    background: var(--accent);
+    color: white;
+}
+
+.table-item .table-icon {
+    font-size: 14px;
+    opacity: 0.7;
+    flex-shrink: 0;
+}
+
+.table-item .table-name {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.table-item .table-count {
+    font-size: 11px;
+    background: rgba(255,255,255,0.1);
+    padding: 1px 6px;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+/* ─── TABLE DATA ─── */
+.table-view {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+}
+
+.table-header {
+    padding: 6px 8px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.table-header .btn {
+    padding: 2px 6px;
+    font-size: 12px;
+}
+
+.table-actions {
+    padding: 4px 8px;
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.table-actions .btn {
+    font-size: 11px;
+    padding: 3px 8px;
+}
+
+.data-container {
+    flex: 1;
+    overflow: auto;
+    padding: 0;
+}
+
+/* ─── DATA TABLE (phpMyAdmin style) ─── */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.data-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.data-table thead th {
+    background: #2b5278;
+    color: #fff;
+    padding: 6px 8px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    border-bottom: 2px solid #1a3a5c;
+    white-space: nowrap;
+}
+
+.data-table thead th.actions-col {
+    width: 70px;
+    text-align: center;
+}
+
+.data-table tbody tr {
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: background 0.1s;
+}
+
+.data-table tbody tr:nth-child(even) {
+    background: var(--row-stripe);
+}
+
+.data-table tbody tr:hover {
+    background: var(--row-hover);
+}
+
+.data-table tbody td {
+    padding: 5px 8px;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.data-table tbody td.actions-cell {
+    text-align: center;
+    white-space: nowrap;
+}
+
+.data-table .pk-cell {
+    color: var(--warning);
+    font-weight: 600;
+}
+
+/* Row action buttons */
+.row-action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 4px;
+    font-size: 14px;
+    opacity: 0.6;
+    transition: opacity 0.15s;
+    color: var(--text-primary);
+}
+
+.row-action-btn:hover {
+    opacity: 1;
+}
+
+.row-action-btn.edit-btn:hover {
+    color: var(--warning);
+}
+
+.row-action-btn.delete-btn:hover {
+    color: var(--danger);
+}
+
+/* ─── MODAL WINDOWS ─── */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 16px;
+}
+
+.modal-dialog-custom {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    width: 100%;
+    max-width: 400px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+.modal-header-custom {
+    padding: 10px 14px;
+    background: var(--accent);
+    color: white;
+    border-radius: 6px 6px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+}
+
+.modal-header-custom.bg-danger {
+    background: var(--danger) !important;
+}
+
+.modal-body-custom {
+    padding: 14px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.modal-footer-custom {
+    padding: 10px 14px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    flex-shrink: 0;
+}
+
+/* ─── FORMS ─── */
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 3px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.form-group label .type-hint {
+    font-weight: 400;
+    text-transform: none;
+    opacity: 0.7;
+}
+
+.form-control {
+    width: 100%;
+    padding: 6px 10px;
+    font-size: 13px;
+    background: var(--input-bg) !important;
+    border: 1px solid var(--input-border) !important;
+    color: var(--input-fg) !important;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.form-control:focus {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 2px rgba(14, 99, 156, 0.25);
+}
+
+/* ─── NOTIFICATIONS ─── */
+.toast-message {
+    position: fixed;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    z-index: 2000;
+    animation: slideUp 0.3s ease-out;
+    max-width: calc(100% - 32px);
+    text-align: center;
+}
+
+.toast-message.success {
+    background: var(--success);
+    color: white;
+}
+
+.toast-message.error {
+    background: var(--danger);
+    color: white;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateX(-50%) translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.15);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.25);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 350px) {
+    .table-actions {
+        flex-direction: column;
+    }
+    .data-table tbody td {
+        max-width: 100px;
+    }
+}
+
+/* ─── BADGE ─── */
+.badge {
+    font-size: 10px;
+    padding: 2px 6px;
+}
+
+/* ─── BTN-CLOSE (for dark theme) ─── */
+.btn-close-white {
+    filter: invert(1);
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    opacity: 0.7;
+    padding: 0;
+    line-height: 1;
+}
+
+.btn-close-white::before {
+    content: '✕';
+    color: white;
+}
+
+.btn-close-white:hover {
+    opacity: 1;
+}
+
+/* ─── Bootstrap overrides for VS Code ─── */
+.btn-primary {
+    background-color: var(--accent) !important;
+    border-color: var(--accent) !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-hover) !important;
+    border-color: var(--accent-hover) !important;
+}
+
+.btn-outline-secondary {
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+}
+
+.btn-outline-secondary:hover {
+    background: var(--row-hover) !important;
+    color: var(--text-primary) !important;
+}
+
+.btn-outline-info {
+    color: #17a2b8 !important;
+    border-color: #17a2b8 !important;
+}
+
+.btn-outline-info:hover {
+    background: #17a2b8 !important;
+    color: white !important;
+}
+
+.btn-outline-warning {
+    color: var(--warning) !important;
+    border-color: var(--warning) !important;
+}
+
+.btn-outline-warning:hover {
+    background: var(--warning) !important;
+    color: #000 !important;
+}

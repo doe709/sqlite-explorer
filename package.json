@@ -1,0 +1,74 @@
+{
+  "name": "sqlite-explorer",
+  "displayName": "SQLite Explorer",
+  "description": "A lightweight SQLite viewer and editor for VS Code. Browse tables, add, edit, and delete records — no native dependencies.",
+  "version": "1.0.0",
+  "publisher": "sqlite-explorer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/doe709/sqlite-explorer"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "icon": "media/icon.png",
+  "activationEvents": [
+    "onView:sqliteExplorer"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "sqlite-explorer",
+          "title": "🗄️ SQLite Explorer",
+          "icon": "$(database)"
+        }
+      ]
+    },
+    "views": {
+      "sqlite-explorer": [
+        {
+          "type": "webview",
+          "id": "sqliteExplorer",
+          "name": "🗄️ SQLite Explorer"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "sqliteExplorer.openDb",
+        "title": "🗄️ Open in SQLite Explorer"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "sqliteExplorer.openDb",
+          "when": "resourceExtname =~ /\\.(db|sqlite|sqlite3)$/i",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --sourcemap && node -e \"require('fs').copyFileSync('node_modules/sql.js/dist/sql-wasm.wasm','dist/sql-wasm.wasm')\"",
+    "watch": "npm run compile",
+    "pretest": "npm run compile",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.20.0",
+    "typescript": "^5.3.0",
+    "@vscode/vsce": "^2.22.0"
+  },
+  "dependencies": {
+    "sql.js": "^1.10.0"
+  }
+}
