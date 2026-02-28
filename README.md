@@ -1,4 +1,4 @@
-# SQLite Explorer for VS Code
+# SQLite Explorer Plus for VS Code
 
 A lightweight SQLite database viewer **and editor** for VS Code, inspired by phpMyAdmin and DB Browser for SQLite.
 
@@ -34,7 +34,7 @@ Add or edit records with forms built automatically from table columns.
 
 ## How It Works
 
-1. Click the 🗄️ icon in the Activity Bar, or right-click any `.db` file → **"Open in SQLite Explorer"**
+1. Click the 🗄️ icon in the Activity Bar, or right-click any `.db` file → **"Open in SQLite Explorer Plus"**
 2. Browse your tables with row counts
 3. Click a table to view its data
 4. Use ➕ **Add**, ✏️ **Edit**, 🗑️ **Delete**, 🔄 **Refresh**

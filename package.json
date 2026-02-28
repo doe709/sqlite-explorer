@@ -1,6 +1,6 @@
 {
-  "name": "sqlite-explorer",
-  "displayName": "SQLite Explorer",
+  "name": "sqlite-explorer-plus",
+  "displayName": "SQLite Explorer Plus",
   "description": "A lightweight SQLite viewer and editor for VS Code. Browse tables, add, edit, and delete records — no native dependencies.",
   "version": "1.0.0",
   "publisher": "sqlite-explorer",

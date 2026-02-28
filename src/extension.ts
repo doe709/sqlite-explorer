@@ -252,7 +252,7 @@ class SqliteExplorerProvider implements vscode.WebviewViewProvider {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource} 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'nonce-${nonce}' https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net;">
-    <title>SQLite Explorer</title>
+    <title>SQLite Explorer Plus</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="${styleUri}" rel="stylesheet">
@@ -261,7 +261,7 @@ class SqliteExplorerProvider implements vscode.WebviewViewProvider {
     <div id="app">
         <!-- HEADER -->
         <div class="header-bar">
-            <h6 class="mb-0">🗄️ SQLite Explorer</h6>
+            <h6 class="mb-0">🗄️ SQLite Explorer Plus</h6>
             <span id="dbName" class="db-name">No database open</span>
         </div>
 
